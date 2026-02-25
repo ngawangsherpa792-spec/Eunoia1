@@ -519,7 +519,7 @@
                     </div>
                     <span
                         class="font-orbitron font-bold text-xl tracking-wider text-white group-hover:text-cyber-blue transition-colors">
-                        EUNOIA
+                        EUNOIA TECHNOLOGIES
                     </span>
                 </a>
 
@@ -583,7 +583,7 @@
                         </div>
 
                         <h1
-                            class="font-orbitron font-black text-3xl sm:text-5xl lg:text-7xl xl:text-8xl leading-tight mb-6">
+                            class="font-orbitron font-black text-2xl sm:text-5xl lg:text-7xl xl:text-8xl leading-tight mb-6">
                             <span class="block text-white glitch" id="hero-title-1" data-text="EUNOIA">EUNOIA</span>
                             <span
                                 class="block bg-gradient-to-r from-cyber-blue via-cyber-purple to-cyber-pink bg-clip-text text-transparent glitch"
@@ -597,7 +597,7 @@
                             Cybersecurity & AI Excellence
                         </p>
 
-                        <div class="text-cyber-blue font-orbitron text-lg sm:text-xl tracking-widest mb-8 glitch"
+                        <div class="text-cyber-blue font-orbitron text-base sm:text-xl tracking-widest mb-8 glitch"
                             id="hero-tagline" data-text="INNOVATION STARTS FROM NOW">
                             <span class="text-white">&gt;</span> INNOVATION STARTS FROM NOW
                         </div>
@@ -871,9 +871,9 @@
                             COURSES</span>
                     </div>
 
-                    <h2 class="font-orbitron font-bold text-4xl sm:text-5xl lg:text-6xl text-white mb-6 glitch"
-                        data-text="Master Tomorrow's Tech">
-                        Master <span class="text-cyber-pink">Tomorrow's</span> Tech
+                    <h2 class="font-orbitron font-bold text-3xl sm:text-5xl lg:text-6xl text-white mb-6 glitch"
+                        data-text="Master Tomorrow's Technologies">
+                        Master <span class="text-cyber-pink">Tomorrow's</span> Technologies
                     </h2>
                     <p class="text-gray-400 text-lg max-w-2xl mx-auto font-inter">
                         Comprehensive, industry-aligned programs designed to transform beginners into experts
@@ -913,8 +913,8 @@
                             {% endfor %}
                         </div>
 
-                        <button
-                            class="magnetic-btn btn-glitch w-full py-4 rounded-xl font-rajdhani font-bold text-white transition-all hover:opacity-90 group"
+                        <a href="#contact"
+                            class="magnetic-btn btn-glitch w-full py-4 rounded-xl font-rajdhani font-bold text-white transition-all hover:opacity-90 group inline-flex items-center justify-center"
                             style="background: var(--course-color);" data-text="Enroll Now">
                             <span class="glitch-layer glitch" data-text="Enroll Now"></span>
                             <span class="flex items-center justify-center space-x-2">
@@ -922,7 +922,7 @@
                                 <i data-lucide="arrow-right"
                                     class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
                             </span>
-                        </button>
+                        </a>
                     </div>
                     {% endfor %}
                 </div>
@@ -971,7 +971,7 @@
                             </div>
                             <h3 class="font-orbitron font-bold text-xl text-white mb-3">Expert Mentorship</h3>
                             <p class="text-gray-400 font-inter">Learn directly from industry veterans who have worked at
-                                top compamies of Nepal.</p>
+                                top companies of Nepal.</p>
                         </div>
                     </div>
 
@@ -1025,7 +1025,7 @@
                                 </div>
                                 <div>
                                     <div class="font-rajdhani font-bold text-white">Location</div>
-                                    <div class="text-gray-400">Tech Hub, Innovation District</div>
+                                    <div class="text-gray-400">Kathmandu, Nepal</div>
                                 </div>
                             </div>
 
@@ -1074,13 +1074,13 @@
                                     <label class="block text-gray-400 font-rajdhani mb-2">First Name</label>
                                     <input type="text"
                                         class="w-full px-4 py-3 rounded-xl bg-cyber-dark border border-white/10 text-white focus:border-cyber-blue focus:outline-none transition-colors font-inter"
-                                        placeholder="John" required>
+                                        placeholder="" required>
                                 </div>
                                 <div>
                                     <label class="block text-gray-400 font-rajdhani mb-2">Last Name</label>
                                     <input type="text"
                                         class="w-full px-4 py-3 rounded-xl bg-cyber-dark border border-white/10 text-white focus:border-cyber-blue focus:outline-none transition-colors font-inter"
-                                        placeholder="Doe" required>
+                                        placeholder="" required>
                                 </div>
                             </div>
 
@@ -1088,7 +1088,7 @@
                                 <label class="block text-gray-400 font-rajdhani mb-2">Email</label>
                                 <input type="email"
                                     class="w-full px-4 py-3 rounded-xl bg-cyber-dark border border-white/10 text-white focus:border-cyber-blue focus:outline-none transition-colors font-inter"
-                                    placeholder="john@example.com" required>
+                                    placeholder="" required>
                             </div>
 
                             <div>
@@ -1138,7 +1138,8 @@
                                 <img src="{{ url_for('static', filename='images/logo.webp') }}" alt="EUNOIA Logo"
                                     class="w-full h-full object-contain">
                             </div>
-                            <span class="font-orbitron font-bold text-xl tracking-wider text-white">EUNOIA</span>
+                            <span class="font-orbitron font-bold text-xl tracking-wider text-white">EUNOIA
+                                TECHNOLOGIES</span>
                         </div>
                         <p class="text-gray-400 max-w-sm font-inter mb-4">
                             Pioneering the future of technology education. Where innovation meets excellence,
@@ -1166,13 +1167,14 @@
                     <div>
                         <h4 class="font-orbitron font-bold text-white mb-4">Courses</h4>
                         <ul class="space-y-2 font-rajdhani">
-                            <li><a href="#"
+                            <li><a href="#courses"
                                     class="text-gray-400 hover:text-cyber-blue transition-colors">Cybersecurity</a>
                             </li>
-                            <li><a href="#" class="text-gray-400 hover:text-cyber-blue transition-colors">AI & ML</a>
+                            <li><a href="#courses" class="text-gray-400 hover:text-cyber-blue transition-colors">AI &
+                                    ML</a>
                             </li>
 
-                            <li><a href="#" class="text-gray-400 hover:text-cyber-blue transition-colors">Data
+                            <li><a href="#courses" class="text-gray-400 hover:text-cyber-blue transition-colors">Data
                                     Science</a></li>
                         </ul>
                     </div>
