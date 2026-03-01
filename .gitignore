@@ -30,3 +30,12 @@ Thumbs.db
 
 # Vercel
 .vercel
+
+# Node / Tailwind build dependencies
+node_modules/
+package-lock.json
+
+# Tailwind source (output.css is committed, not input.css intermediary build artifacts)
+# Keep: static/css/output.css  <-- COMMIT THIS
+# Keep: tailwind.config.js     <-- COMMIT THIS
+# Keep: package.json           <-- COMMIT THIS

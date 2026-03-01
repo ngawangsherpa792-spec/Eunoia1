@@ -1,0 +1,69 @@
+<!-- Courses Section -->
+<section id="courses" class="relative py-24 sm:py-32 overflow-hidden">
+    <div class="w-full px-4 sm:px-6 lg:px-8 xl:px-12">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal-up">
+                <div
+                    class="inline-flex items-center space-x-2 px-4 py-2 rounded-full border border-cyber-pink/30 bg-cyber-pink/10 mb-6">
+                    <i data-lucide="book-open" class="w-4 h-4 text-cyber-pink"></i>
+                    <span class="text-cyber-pink font-rajdhani font-semibold tracking-wider text-sm">OUR
+                        COURSES</span>
+                </div>
+
+                <h2 class="font-orbitron font-bold text-3xl sm:text-5xl lg:text-6xl text-white mb-6 glitch"
+                    data-text="Master Tomorrow's Technologies">
+                    Master <span class="text-cyber-pink">Tomorrow's</span> Technologies
+                </h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto font-inter">
+                    Comprehensive, industry-aligned programs designed to transform beginners into experts
+                    and experts into innovators.
+                </p>
+            </div>
+
+            <!-- Course Cards Grid -->
+            <div class="grid md:grid-cols-2 gap-8" id="courses-grid">
+                {% for key, course in courses.items() %}
+                <div class="course-card neon-border rounded-2xl p-8 reveal-up" data-course="{{ key }}"
+                    style="--course-color: {{ course.color }};">
+                    <div class="flex items-start justify-between mb-6">
+                        <div class="w-16 h-16 rounded-2xl flex items-center justify-center"
+                            style="background: color-mix(in srgb, var(--course-color), transparent 80%);">
+                            <i data-lucide="{{ course.icon }}" class="w-8 h-8" style="color: var(--course-color);"></i>
+                        </div>
+                        <div class="flex items-center space-x-2 text-sm font-rajdhani">
+                            <span class="px-3 py-1 rounded-full border"
+                                style="border-color: color-mix(in srgb, var(--course-color), transparent 60%); color: var(--course-color);">{{
+                                course.duration }}</span>
+                            <span class="px-3 py-1 rounded-full border border-white/20 text-gray-400">{{
+                                course.level }}</span>
+                        </div>
+                    </div>
+
+                    <h3 class="font-orbitron font-bold text-2xl text-white mb-3">{{ course.title }}</h3>
+                    <p class="text-gray-400 mb-6 font-inter">{{ course.description }}</p>
+
+                    <div class="space-y-3 mb-8">
+                        {% for module in course.modules %}
+                        <div class="flex items-center space-x-3 text-gray-300 font-rajdhani">
+                            <i data-lucide="chevron-right" class="w-4 h-4" style="color: var(--course-color);"></i>
+                            <span>{{ module }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <a href="#contact"
+                        class="magnetic-btn btn-glitch w-full py-4 rounded-xl font-rajdhani font-bold text-white transition-all hover:opacity-90 group inline-flex items-center justify-center"
+                        style="background: var(--course-color);" data-text="Enroll Now">
+                        <span class="glitch-layer glitch" data-text="Enroll Now"></span>
+                        <span class="flex items-center justify-center space-x-2">
+                            <span>Enroll Now</span>
+                            <i data-lucide="arrow-right"
+                                class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                        </span>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>

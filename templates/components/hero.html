@@ -1,0 +1,123 @@
+<!-- Hero Section -->
+<section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <canvas id="hero-canvas"></canvas>
+
+    <div class="relative z-10 w-full px-4 sm:px-6 lg:px-8 xl:px-12 pt-20">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="text-center lg:text-left">
+                    <div
+                        class="inline-flex items-center space-x-2 px-4 py-2 rounded-full border border-cyber-blue/30 bg-cyber-blue/10 mb-6 reveal-up">
+                        <span class="w-2 h-2 bg-cyber-blue rounded-full animate-pulse"></span>
+                        <span class="text-cyber-blue font-rajdhani font-semibold tracking-wider text-sm">SYSTEM
+                            ONLINE</span>
+                    </div>
+
+                    <h1
+                        class="font-orbitron font-black text-2xl sm:text-5xl lg:text-7xl xl:text-8xl leading-tight mb-6">
+                        <span class="block text-white glitch" id="hero-title-1" data-text="EUNOIA">EUNOIA</span>
+                        <span
+                            class="block bg-gradient-to-r from-cyber-blue via-cyber-purple to-cyber-pink bg-clip-text text-transparent glitch"
+                            id="hero-title-2" data-text="TECHNOLOGIES">
+                            TECHNOLOGIES
+                        </span>
+                    </h1>
+
+                    <p class="text-xl sm:text-2xl text-gray-400 font-rajdhani mb-4 typing-cursor" id="hero-subtitle">
+                        Cybersecurity & AI Excellence
+                    </p>
+
+                    <div class="text-cyber-blue font-orbitron text-base sm:text-xl tracking-widest mb-8 glitch"
+                        id="hero-tagline" data-text="INNOVATION STARTS FROM NOW">
+                        <span class="text-white">&gt;</span> INNOVATION STARTS FROM NOW
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start reveal-up">
+                        <a href="#courses"
+                            class="magnetic-btn btn-glitch group relative px-8 py-4 bg-gradient-to-r from-cyber-blue to-cyber-purple rounded-full font-rajdhani font-bold text-white text-lg overflow-hidden"
+                            data-text="Explore Courses">
+                            <span class="glitch-layer glitch" data-text="Explore Courses"></span>
+                            <span class="relative z-10 flex items-center justify-center space-x-2">
+                                <span>Explore Courses</span>
+                                <i data-lucide="arrow-right"
+                                    class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                            </span>
+                            <div
+                                class="absolute inset-0 bg-gradient-to-r from-cyber-purple to-cyber-pink opacity-0 group-hover:opacity-100 transition-opacity">
+                            </div>
+                        </a>
+                        <a href="#about"
+                            class="magnetic-btn px-8 py-4 border border-white/20 rounded-full font-rajdhani font-bold text-white text-lg hover:border-cyber-blue hover:text-cyber-blue transition-all">
+                            Learn More
+                        </a>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-12 pt-8 border-t border-white/10 reveal-up">
+                        <div class="text-center lg:text-left">
+                            <div class="font-orbitron font-bold text-3xl sm:text-4xl text-cyber-blue counter"
+                                data-target="10">0</div>
+                            <div class="text-gray-500 font-rajdhani text-sm mt-1">Expert Courses</div>
+                        </div>
+                        <div class="text-center lg:text-left">
+                            <div class="font-orbitron font-bold text-3xl sm:text-4xl text-cyber-purple counter"
+                                data-target="500">0</div>
+                            <div class="text-gray-500 font-rajdhani text-sm mt-1">Students Trained</div>
+                        </div>
+                        <div class="text-center lg:text-left">
+                            <div class="font-orbitron font-bold text-3xl sm:text-4xl text-cyber-pink counter"
+                                data-target="98">0</div>
+                            <div class="text-gray-500 font-rajdhani text-sm mt-1">Success Rate %</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Visual -->
+                <div class="relative hidden lg:block reveal-scale">
+                    <div class="relative w-full aspect-square">
+                        <!-- Orbital Rings -->
+                        <div class="absolute inset-0 border border-cyber-blue/20 rounded-full animate-spin"
+                            style="animation-duration: 20s;"></div>
+                        <div class="absolute inset-8 border border-cyber-purple/20 rounded-full animate-spin"
+                            style="animation-duration: 15s; animation-direction: reverse;"></div>
+                        <div class="absolute inset-16 border border-cyber-pink/20 rounded-full animate-spin"
+                            style="animation-duration: 10s;"></div>
+
+                        <!-- Center Element -->
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div
+                                class="w-48 h-48 bg-gradient-to-br from-cyber-blue/20 to-cyber-purple/20 rounded-full blur-3xl animate-pulse">
+                            </div>
+                            <div
+                                class="relative w-32 h-32 bg-gradient-to-br from-cyber-blue to-cyber-purple rounded-2xl rotate-45 flex items-center justify-center shadow-2xl shadow-cyber-blue/50">
+                                <i data-lucide="cpu" class="w-16 h-16 text-white -rotate-45"></i>
+                            </div>
+                        </div>
+
+                        <!-- Floating Elements -->
+                        <div
+                            class="absolute top-10 right-10 w-16 h-16 bg-cyber-dark border border-cyber-blue/50 rounded-xl flex items-center justify-center animate-float shadow-lg shadow-cyber-blue/20">
+                            <i data-lucide="shield" class="w-8 h-8 text-cyber-blue"></i>
+                        </div>
+                        <div class="absolute bottom-20 left-10 w-16 h-16 bg-cyber-dark border border-cyber-purple/50 rounded-xl flex items-center justify-center animate-float shadow-lg shadow-cyber-purple/20"
+                            style="animation-delay: 1s;">
+                            <i data-lucide="brain" class="w-8 h-8 text-cyber-purple"></i>
+                        </div>
+                        <div class="absolute top-1/2 -right-4 w-16 h-16 bg-cyber-dark border border-cyber-pink/50 rounded-xl flex items-center justify-center animate-float shadow-lg shadow-cyber-pink/20"
+                            style="animation-delay: 2s;">
+                            <i data-lucide="code" class="w-8 h-8 text-cyber-pink"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center space-y-2 opacity-50">
+        <span class="text-xs font-rajdhani tracking-widest text-gray-400">SCROLL</span>
+        <div class="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center pt-2">
+            <div class="w-1 h-2 bg-cyber-blue rounded-full animate-bounce"></div>
+        </div>
+    </div>
+</section>

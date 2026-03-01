@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/webp" href="{{ url_for('static', filename='images/logo.webp') }}">
+
+    <!-- SEO Meta Tags -->
+    <title>{% block title %}EUNOIA | Cyber & AI Technologies{% endblock %}</title>
+    <meta name="title" content="EUNOIA | Cyber & AI Technologies - Innovation Starts Now">
+    <meta name="description"
+        content="EUNOIA Cyber & AI Technologies in Kathmandu, Nepal. Premium courses in Ethical Hacking, Cybersecurity, AI, and Machine Learning. Start your tech journey today!">
+    <meta name="keywords"
+        content="Cybersecurity courses Nepal, AI training Kathmandu, Machine Learning Nepal, Ethical Hacking Kathmandu, EUNOIA Technologies, Tech Education Nepal">
+    <meta name="author" content="EUNOIA Technologies">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ url }}">
+
+    <!-- Local SEO (Nepal) -->
+    <meta name="geo.region" content="NP-BA">
+    <meta name="geo.placename" content="Kathmandu">
+    <meta name="geo.position" content="27.7172;85.3240">
+    <meta name="ICBM" content="27.7172, 85.3240">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url }}">
+    <meta property="og:title" content="EUNOIA | Cyber & AI Technologies - Innovation Starts Now">
+    <meta property="og:description"
+        content="EUNOIA Cyber & AI Technologies in Kathmandu, Nepal. Premium courses in Ethical Hacking, Cybersecurity, AI, and Machine Learning.">
+    <meta property="og:image" content="{{ request.url_root }}static/images/og-banner.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="EUNOIA Technologies - Cybersecurity & AI Excellence">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ url }}">
+    <meta property="twitter:title" content="EUNOIA | Cyber & AI Technologies - Innovation Starts Now">
+    <meta property="twitter:description"
+        content="EUNOIA Cyber & AI Technologies in Kathmandu, Nepal. Premium courses in Ethical Hacking, Cybersecurity, AI, and Machine Learning.">
+    <meta property="twitter:image" content="{{ request.url_root }}static/images/og-banner.png">
+    <meta property="twitter:image:alt" content="EUNOIA Technologies - Cybersecurity & AI Excellence">
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "EUNOIA Technologies",
+      "alternateName": "EUNOIA Cyber & AI Technologies",
+      "url": "{{ request.url_root }}",
+      "logo": "{{ request.url_root }}static/images/logo.webp",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+977-9713086178",
+        "contactType": "customer service",
+        "areaServed": "NP",
+        "availableLanguage": ["en", "ne"]
+      },
+      "sameAs": [
+        "https://www.facebook.com/profile.php?id=61563212624584",
+        "https://www.instagram.com/eunoiacyberandaitechnologies/"
+      ]
+    }
+    </script>
+
+    {% for key, course in courses.items() %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Course",
+      "name": "{{ course.title }}",
+      "description": "{{ course.description }}",
+      "provider": {
+        "@type": "Organization",
+        "name": "EUNOIA Technologies",
+        "sameAs": "{{ request.url_root }}"
+      },
+      "hasCourseInstance": {
+        "@type": "CourseInstance",
+        "courseMode": "In-Person",
+        "location": "Kathmandu, Nepal"
+      }
+    }
+    </script>
+    {% endfor %}
+
+    <!-- Fonts: Preconnect for speed + Preload critical hero font (LCP optimization) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet">
+    </noscript>
+
+    <!-- Tailwind CSS (compiled, tree-shaken build — 25kB vs CDN 350kB) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}">
+
+    <!-- GSAP for Animations -->
+    <script src="{{ url_for('static', filename='vendor/gsap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/ScrollTrigger.min.js') }}"></script>
+
+    <!-- Three.js for 3D Background -->
+    <script src="{{ url_for('static', filename='vendor/three.min.js') }}"></script>
+
+    <!-- Lucide Icons -->
+    <script src="{{ url_for('static', filename='vendor/lucide.min.js') }}"></script>
+
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #050508;
+            color: #ffffff;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0a0a0f;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #00d4ff, #8338ec);
+            border-radius: 4px;
+        }
+
+        /* Highly Optimized Glitch Effect */
+        .glitch {
+            position: relative;
+            display: inline-block;
+            z-index: 1;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: -1;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        .glitch::before {
+            color: #fff;
+            animation: glitch-anim-1 2s infinite linear alternate-reverse;
+            opacity: 0.2;
+            clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+        }
+
+        .glitch::after {
+            color: #fff;
+            animation: glitch-anim-2 2s infinite linear alternate-reverse;
+            opacity: 0.2;
+            clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+        }
+
+        .glitch.active-glitch::before {
+            animation: glitch-anim-1 0.2s infinite linear;
+            opacity: 0.5;
+        }
+
+        .glitch.active-glitch::after {
+            animation: glitch-anim-2 0.2s infinite linear;
+            opacity: 0.5;
+        }
+
+        @keyframes glitch-anim-1 {
+            0% {
+                transform: translate(0);
+                clip-path: inset(40% 0 61% 0);
+            }
+
+            20% {
+                transform: translate(-3px, 1px);
+                clip-path: inset(92% 0 1% 0);
+            }
+
+            40% {
+                transform: translate(3px, -1px);
+                clip-path: inset(43% 0 1% 0);
+            }
+
+            60% {
+                transform: translate(-3px, 1px);
+                clip-path: inset(25% 0 58% 0);
+            }
+
+            80% {
+                transform: translate(3px, -1px);
+                clip-path: inset(54% 0 7% 0);
+            }
+
+            100% {
+                transform: translate(0);
+                clip-path: inset(58% 0 43% 0);
+            }
+        }
+
+        @keyframes glitch-anim-2 {
+            0% {
+                transform: translate(0);
+                clip-path: inset(24% 0 29% 0);
+            }
+
+            20% {
+                transform: translate(3px, -1px);
+                clip-path: inset(54% 0 21% 0);
+            }
+
+            40% {
+                transform: translate(-3px, 1px);
+                clip-path: inset(15% 0 56% 0);
+            }
+
+            60% {
+                transform: translate(3px, -1px);
+                clip-path: inset(62% 0 33% 0);
+            }
+
+            80% {
+                transform: translate(-3px, 1px);
+                clip-path: inset(34% 0 14% 0);
+            }
+
+            100% {
+                transform: translate(0);
+                clip-path: inset(7% 0 62% 0);
+            }
+        }
+
+        /* Glitch Button Effects */
+        .btn-glitch {
+            overflow: visible !important;
+            transition: all 0.3s ease;
+        }
+
+        .btn-glitch .glitch-layer {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn-glitch:hover {
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+        }
+
+        .btn-glitch:hover .glitch-layer {
+            opacity: 1;
+        }
+
+        .btn-glitch:hover .glitch-layer.glitch::before,
+        .btn-glitch:hover .glitch-layer.glitch::after {
+            animation-duration: 0.3s;
+        }
+
+        .btn-glitch span {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Neon Border */
+        .neon-border {
+            position: relative;
+            background: rgba(10, 10, 15, 0.8);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            overflow: hidden;
+        }
+
+        .neon-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00d4ff, #8338ec, #ff006e, #00d4ff);
+            background-size: 400% 400%;
+            z-index: -1;
+            animation: gradient-shift 3s ease infinite;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .neon-border:hover::before {
+            opacity: 1;
+        }
+
+        @keyframes gradient-shift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Particle Canvas */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Scan Line Effect */
+        .scan-line {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 9999;
+            animation: scan 8s linear infinite;
+        }
+
+        /* Magnetic Button */
+        .magnetic-btn {
+            transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* Text Scramble */
+        .scramble-text {
+            display: inline-block;
+        }
+
+        /* Card Hover Effects */
+        .course-card {
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+        }
+
+        /* Navigation Blur */
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00d4ff, #8338ec, #ff006e);
+            z-index: 10000;
+            transform-origin: left;
+            transform: scaleX(0);
+        }
+
+        /* Loading Screen */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #050508;
+            z-index: 99999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .loader-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #ffffff;
+            background: linear-gradient(90deg, #00d4ff, #8338ec, #ff006e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+            animation: pulse-slow 2s infinite;
+        }
+
+        .loader-bar {
+            width: 200px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            margin-top: 20px;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .loader-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #00d4ff, #8338ec);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        /* Hero Canvas Container */
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        /* Custom Cursor */
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #00d4ff;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 99998;
+            transition: transform 0.1s, border-color 0.3s;
+            mix-blend-mode: difference;
+        }
+
+        .custom-cursor.hover {
+            transform: scale(2);
+            border-color: #ff006e;
+            background: rgba(255, 0, 110, 0.1);
+        }
+
+        /* Grid Background */
+        .cyber-grid {
+            background-image:
+                linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        /* Typing Effect */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
+            color: #00d4ff;
+        }
+
+        @keyframes blink {
+
+            0%,
+            50% {
+                opacity: 1;
+            }
+
+            51%,
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* Reveal Animation Classes */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+        }
+
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        /* Real-time Validation Styles */
+        .input-error {
+            border-color: #ff006e !important;
+            box-shadow: 0 0 10px rgba(255, 0, 110, 0.2);
+        }
+
+        .error-message {
+            color: #ff006e;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            font-family: 'Rajdhani', sans-serif;
+            display: none;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body class="cyber-grid">
+    <!-- Loading Screen -->
+    <div id="loader">
+        <div class="loader-text glitch" data-text="EUNOIA">EUNOIA</div>
+        <div class="loader-bar">
+            <div class="loader-progress" id="loader-progress"></div>
+        </div>
+        <div class="mt-4 text-cyber-blue font-rajdhani text-sm tracking-widest">INITIALIZING SYSTEM...</div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="custom-cursor hidden md:block" id="cursor"></div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progress-bar"></div>
+
+    <!-- Scan Line -->
+    <div class="scan-line"></div>
+
+    <!-- Particle Canvas -->
+    <canvas id="particles-canvas"></canvas>
+
+    {% block content %}{% endblock %}
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-8 right-8 transform translate-y-20 opacity-0 transition-all duration-300 z-50">
+        <div class="neon-border rounded-xl px-6 py-4 bg-cyber-dark flex items-center space-x-3">
+            <i data-lucide="check-circle" class="w-6 h-6 text-cyber-blue"></i>
+            <span class="text-white font-rajdhani" id="toast-message">Message sent successfully!</span>
+        </div>
+    </div>
+
+    <!-- Google Analytics 4 -->
+    <!-- IMPORTANT: Replace G-XXXXXXXXXX with your actual GA4 Measurement ID -->
+    <!-- Get your ID from: https://analytics.google.com -->
+    <!--
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    -->
+
+    {% block scripts %}
+    <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% endblock %}
+</body>
+
+</html>

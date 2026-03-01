@@ -92,7 +92,16 @@ COURSES = {
 def index():
     return render_template('index.html', 
                          courses=COURSES, 
+                         url=request.url,
                          year=datetime.now().year)
+
+@app.route('/robots.txt')
+def robots():
+    return render_template('robots.txt')
+
+@app.route('/sitemap.xml')
+def sitemap():
+    return render_template('sitemap.xml', now=datetime.now().strftime('%Y-%m-%d'))
 
 @app.route('/api/courses')
 def get_courses():
