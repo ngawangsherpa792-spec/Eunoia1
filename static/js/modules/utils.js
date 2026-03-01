@@ -31,29 +31,39 @@ function initTextScramble() {
     const el = document.getElementById('hero-subtitle');
     if (!el) return;
 
-    const chars = '!<>-_\/[]{}—=+*^?#________';
-    const originalText = el.innerText;
-    let iteration = 0;
+    const chars = '!<>-_\\/[]{}=+*^?#________';
+    const originalText = el.textContent.trim();
+    // Store as source of truth
+    el.dataset.original = originalText;
+    let isRunning = false;
 
     const scramble = () => {
-        iteration = 0;
+        if (isRunning) return;
+        isRunning = true;
+        let iteration = 0;
+        const text = el.dataset.original;
+
         const interval = setInterval(() => {
-            el.innerText = originalText
+            el.textContent = text
                 .split('')
                 .map((char, index) => {
+                    if (char === ' ') return ' ';
                     if (index < iteration) {
-                        return originalText[index];
+                        return text[index];
                     }
                     return chars[Math.floor(Math.random() * chars.length)];
                 })
                 .join('');
 
-            if (iteration >= originalText.length) {
+            if (iteration >= text.length) {
                 clearInterval(interval);
+                // Ensure clean final text
+                el.textContent = text;
+                isRunning = false;
             }
 
-            iteration += 1 / 2;
-        }, 30);
+            iteration += 1;
+        }, 40);
     };
 
     setTimeout(scramble, 1500);

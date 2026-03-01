@@ -3,7 +3,7 @@ from flask import Flask, render_template, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 import os
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', static_url_path='/static')
 
 # Database Configuration
 basedir = os.path.abspath(os.path.dirname(__file__))
