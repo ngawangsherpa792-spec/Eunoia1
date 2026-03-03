@@ -1,7 +1,12 @@
 from datetime import datetime
 from flask import Flask, render_template, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail, Message
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 
@@ -18,6 +23,17 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or \
     'sqlite:///' + db_path
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+# Mail Configuration
+app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER', 'smtp.gmail.com')
+app.config['MAIL_PORT'] = int(os.environ.get('MAIL_PORT', 587))
+app.config['MAIL_USE_TLS'] = os.environ.get('MAIL_USE_TLS', 'True').lower() == 'true'
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER', os.environ.get('MAIL_USERNAME'))
+
+mail = Mail(app)
+
 
 # Ensure tables are created
 try:
@@ -46,6 +62,7 @@ COURSES = {
         'description': 'Master the art of digital defense. From ethical hacking to advanced threat analysis.',
         'duration': '12 Weeks',
         'level': 'Beginner to Advanced',
+        'price': 'Rs. 45,000',
         'icon': 'shield',
         'color': '#00d4ff',
         'modules': [
@@ -61,6 +78,7 @@ COURSES = {
         'description': 'Build intelligent systems. From neural networks to deep learning applications.',
         'duration': '16 Weeks',
         'level': 'Intermediate to Advanced',
+        'price': 'Rs. 55,000',
         'icon': 'brain',
         'color': '#ff006e',
         'modules': [
@@ -76,6 +94,7 @@ COURSES = {
         'description': 'Transform raw data into actionable insights using cutting-edge analytics.',
         'duration': '14 Weeks',
         'level': 'Intermediate',
+        'price': 'Rs. 50,000',
         'icon': 'database',
         'color': '#8338ec',
         'modules': [
@@ -87,6 +106,7 @@ COURSES = {
         ]
     }
 }
+
 
 @app.route('/')
 def index():
@@ -128,6 +148,77 @@ def contact():
         db.session.add(new_message)
         db.session.commit()
         
+        # Send Email
+        try:
+            admin_email = os.environ.get('ADMIN_EMAIL', 'eunoiacyberandaitechnologies@gmail.com')
+            msg = Message(
+                subject=f"New Contact Form Submission: {data.get('course', 'General Inquiry')}",
+                recipients=[admin_email],
+                body=f"""
+                New message from EUNOIA website:
+                
+                Name: {data.get('first_name')} {data.get('last_name')}
+                Email: {data.get('email')}
+                Course: {data.get('course', 'N/A')}
+                
+                Message:
+                {data.get('message')}
+                
+                Sent at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+                """
+            )
+            mail.send(msg)
+            
+            # 2. Automated Auto-Reply to Student
+            selected_course_id = data.get('course')
+            course_info = COURSES.get(selected_course_id, {})
+            course_name = course_info.get('title', 'Advanced Technology Training')
+            course_price = course_info.get('price', 'Available upon request')
+            
+            student_msg = Message(
+                subject=f"Welcome to EUNOIA! Details for {course_name}",
+                recipients=[data.get('email')],
+                html=f"""
+                <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #050508; color: #ffffff; padding: 40px; border-radius: 20px; border: 1px solid #00d4ff;">
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <h1 style="color: #00d4ff; margin: 0; font-family: 'Orbitron', sans-serif; letter-spacing: 4px;">EUNOIA</h1>
+                        <p style="color: #8338ec; font-size: 14px;">CYBER & AI TECHNOLOGIES</p>
+                    </div>
+                    
+                    <h2 style="color: #ffffff;">Namaste, {data.get('first_name')}!</h2>
+                    
+                    <p style="line-height: 1.6; color: #cbd5e1;">
+                        Thank you for your interest in <strong>EUNOIA Technologies</strong>. We are thrilled to help you start your journey into the world of advanced technology!
+                    </p>
+                    
+                    <div style="background: rgba(0, 212, 255, 0.1); padding: 25px; border-radius: 12px; border-left: 4px solid #00d4ff; margin: 25px 0;">
+                        <h3 style="color: #00d4ff; margin-top: 0;">Course Details: {course_name}</h3>
+                        <p style="margin: 5px 0; color: #ffffff;"><strong>Duration:</strong> {course_info.get('duration', 'N/A')}</p>
+                        <p style="margin: 5px 0; color: #ffffff;"><strong>Price:</strong> <span style="font-size: 1.25rem; color: #ff006e; font-weight: bold;">{course_price}</span></p>
+                    </div>
+                    
+                    <p style="line-height: 1.6; color: #cbd5e1;">
+                        Your message has been received, and our academic counselor will reach out to you within 24 hours to discuss the syllabus, career opportunities, and enrollment process.
+                    </p>
+                    
+                    <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center;">
+                        <p style="color: #64748b; font-size: 14px;">
+                            Kathmandu, Nepal<br>
+                            Phone: +977 9713086178<br>
+                            <a href="https://wa.me/9779713086178" style="color: #00d4ff; text-decoration: none;">WhatsApp Us</a>
+                        </p>
+                    </div>
+                </div>
+                """
+            )
+            mail.send(student_msg)
+            
+        except Exception as mail_error:
+
+            print(f"Failed to send email: {mail_error}")
+            # We don't return an error to the user if the DB save succeeded 
+            # but mail failed, but we log it.
+        
         return jsonify({
             'status': 'success', 
             'message': 'Message received! We will contact you soon.'
@@ -135,6 +226,7 @@ def contact():
     except Exception as e:
         db.session.rollback()
         return jsonify({'status': 'error', 'message': str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
