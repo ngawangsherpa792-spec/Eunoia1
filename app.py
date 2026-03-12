@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 from flask import Flask, render_template, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
-from flask_mail import Mail, Message
+from flask_mailman import Mail, EmailMessage
 import os
 from dotenv import load_dotenv
 
@@ -155,9 +155,8 @@ def contact():
         # Send Email
         try:
             admin_email = os.environ.get('ADMIN_EMAIL', 'eunoiacyberandaitechnologies@gmail.com')
-            msg = Message(
+            msg = EmailMessage(
                 subject=f"New Contact Form Submission: {data.get('course', 'General Inquiry')}",
-                recipients=[admin_email],
                 body=f"""
                 New message from EUNOIA website:
                 
@@ -169,15 +168,16 @@ def contact():
                 {data.get('message')}
                 
                 Sent at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-                """
+                """,
+                from_email=admin_email,
+                to=[admin_email]
             )
-            mail.send(msg)
+            msg.send()
             
             # 2. Automated Auto-Reply to Student - with all course prices
-            student_msg = Message(
+            student_msg = EmailMessage(
                 subject="Welcome to EUNOIA! Course Information & Pricing",
-                recipients=[data.get('email')],
-                html=f"""
+                body=f"""
                 <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #050508; color: #ffffff; padding: 40px; border-radius: 20px; border: 1px solid #00d4ff;">
                     <div style="text-align: center; margin-bottom: 30px;">
                         <h1 style="color: #00d4ff; margin: 0; font-family: 'Orbitron', sans-serif; letter-spacing: 4px;">EUNOIA</h1>
@@ -227,9 +227,12 @@ def contact():
                         </p>
                     </div>
                 </div>
-                """
+                """,
+                from_email=admin_email,
+                to=[data.get('email')]
             )
-            mail.send(student_msg)
+            student_msg.content_subtype = "html"
+            student_msg.send()
             
         except Exception as mail_error:
 
