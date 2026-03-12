@@ -39,12 +39,13 @@ app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER', os.env
 mail = Mail(app)
 
 
-# Ensure tables are created
-try:
-    with app.app_context():
-        db.create_all()
-except Exception as e:
-    print(f"Database initialization error: {e}")
+# Ensure tables are created (Skip during initialization on Vercel to prevent timeouts)
+if not os.environ.get('VERCEL'):
+    try:
+        with app.app_context():
+            db.create_all()
+    except Exception as e:
+        print(f"Database initialization error: {e}")
 
 class ContactMessage(db.Model):
     """Model for storing contact form submissions."""
