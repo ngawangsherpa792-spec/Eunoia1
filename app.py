@@ -12,22 +12,25 @@ app = Flask(__name__, static_folder='static', static_url_path='/static')
 
 # Database Configuration
 basedir = os.path.abspath(os.path.dirname(__file__))
-
 database_url = os.environ.get('DATABASE_URL')
+
 if database_url and database_url.startswith("postgres://"):
     database_url = database_url.replace("postgres://", "postgresql://", 1)
 
-# Vercel handles the file system as read-only, except for /tmp
 if os.environ.get('VERCEL'):
-    # If using local SQLite on Vercel, it MUST be in /tmp
-    if not database_url or database_url.startswith('sqlite'):
-        db_path = os.path.join('/tmp', 'eunoia.db')
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_path
+    # Force /tmp path for SQLite on Vercel to ensure it's writable
+    if not database_url or 'sqlite' in database_url:
+        db_path = '/tmp/eunoia.db'
+        app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{db_path}"
     else:
         app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 else:
-    db_path = os.path.join(basedir, 'eunoia.db')
-    app.config['SQLALCHEMY_DATABASE_URI'] = database_url or 'sqlite:///' + db_path
+    # Local development
+    if not database_url:
+        db_path = os.path.join(basedir, 'eunoia.db')
+        app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.abspath(db_path)}"
+    else:
+        app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -57,13 +60,20 @@ class ContactMessage(db.Model):
     def __repr__(self):
         return f'<ContactMessage {self.email}>'
 
-# Ensure tables are created
-# On Vercel, we must create tables on cold start if using SQLite in /tmp
-with app.app_context():
-    try:
-        db.create_all()
-    except Exception as e:
-        print(f"Database initialization error: {e}")
+# Robust Database Initialization for Serverless
+@app.before_request
+def ensure_db_initialized():
+    """Ensure database tables exist before any request is processed."""
+    # We use a simple attribute on the app object to track if we've attempted init 
+    # in this specific worker/container lifecycle.
+    if not getattr(app, '_database_initialized', False):
+        with app.app_context():
+            try:
+                db.create_all()
+                app._database_initialized = True
+            except Exception as e:
+                # Log to Vercel/System logs
+                print(f"CRITICAL: Database initialization failure: {e}")
 
 # Course data
 COURSES = {
