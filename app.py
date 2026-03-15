@@ -4,9 +4,10 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 import smtplib
 from email.message import EmailMessage
+from email.utils import formataddr
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=True)
 
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')
@@ -48,10 +49,12 @@ def send_email_smtp(subject, body, to_emails, from_email=None, html_body=None):
     if not isinstance(to_emails, list):
         to_emails = [to_emails]
     
-    sender = from_email or app.config['MAIL_DEFAULT_SENDER']
+    sender_email = from_email or app.config.get('MAIL_USERNAME')
+    sender_name = app.config.get('MAIL_DEFAULT_SENDER', sender_email)
+    
     msg = EmailMessage()
     msg['Subject'] = subject
-    msg['From'] = sender
+    msg['From'] = formataddr((sender_name, sender_email))
     msg['To'] = ", ".join(to_emails)
     
     if html_body:
