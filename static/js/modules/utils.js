@@ -94,7 +94,7 @@ function initTextScramble() {
 }
 
 function initGlitchTrigger() {
-    const glitchElements = document.querySelectorAll('.glitch');
+    const glitchElements = document.querySelectorAll('.glitch:not(.glitch-layer)');
 
     glitchElements.forEach(el => {
         setInterval(() => {
