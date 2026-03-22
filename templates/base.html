@@ -468,7 +468,7 @@
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
-            z-index: 99998;
+            z-index: 999999;
             transition: transform 0.1s, border-color 0.3s;
             mix-blend-mode: difference;
         }
@@ -555,8 +555,7 @@
         <div class="mt-4 text-cyber-blue font-rajdhani text-sm tracking-widest">INITIALIZING SYSTEM...</div>
     </div>
 
-    <!-- Custom Cursor -->
-    <div class="custom-cursor hidden md:block" id="cursor"></div>
+
 
     <!-- Progress Bar -->
     <div class="progress-bar" id="progress-bar"></div>
@@ -593,6 +592,9 @@
     {% block scripts %}
     <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
     {% endblock %}
+    
+    <!-- Custom Cursor -->
+    <div class="custom-cursor hidden md:block" id="cursor"></div>
 </body>
 
 </html>
